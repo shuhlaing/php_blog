@@ -55,7 +55,7 @@ if ($_POST) {
  ?>
 
 <?php
-  include('header.html');
+  include('header.php');
  ?>
     <div class="content">
       <div class="container-fluid">
@@ -65,7 +65,7 @@ if ($_POST) {
               <div class="card-body">
                 <form class="" action="" method="post" enctype="multipart/form-data">
                   <div class="form-group">
-                    <input type="hidden" name="id" value="<?php echo $result[0]['id'] ?>"
+                    <input type="hidden" name="id" value="<?php echo $result[0]['id'] ?>">
                     <label for="">Title</label>
                     <input type="text" name="title" class="form-control" value="<?php echo $result[0]['title'] ?>" required>
                   </div>

@@ -8,7 +8,7 @@
  ?>
 
 <?php
-  include('header.html');
+  include('header.php');
  ?>
     <div class="content">
       <div class="container-fluid">

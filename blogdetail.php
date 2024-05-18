@@ -16,12 +16,13 @@
   $stmtcmt = $pdo->prepare("SELECT * FROM comments WHERE post_id=$blogId");
   $stmtcmt->execute();
   $cmResult = $stmtcmt->fetchAll();
+
   //
-  $authorId = $cmResult[0]['author_id'];
-  $stmtau = $pdo->prepare("SELECT * FROM users WHERE id=$authorId");
-  //$stmtau->bindValue(':id',$authorId);
-  $stmtau->execute();
-  $auResult = $stmtau->fetchAll();
+  //$authorId = $cmResult[0]['author_id'];
+  // $stmtau = $pdo->prepare("SELECT * FROM users WHERE id=".$_GET['author_id']);
+  // //$stmtau->bindValue(':id',$authorId);
+  // $stmtau->execute();
+  // $auResult = $stmtau->fetchAll();
 
 
   if($_POST) {
@@ -78,7 +79,7 @@
                 <img class="img-fluid" src="admin/images/<?php echo $result[0]['image']?>" style="height:400px !important;width:100%;" alt="">
                 <br><br>
                 <p><?php echo $result[0]['content'] ?></p>
-                <h3>Comment</h3><hr>
+                <!-- <h3>Comment</h3><hr> -->
                 <a href="/blog" type="button" class="btn btn-default">Go Home</a>
               </div>
 
@@ -96,12 +97,13 @@
               </div> -->
 
 
-              <?php
+              <!-- <?php
                 if($cmResult){
                   foreach ($cmResult as $value){
                     ?>
                     <div class="card-footer card-comments">
                       <div class="card-comment">
+                      <strong><?php echo $auResult[0]['name'];?></strong>
                         <div class="comment-text" style="margin-left:0px !important;">
                           <span class="username">
                               <?php echo $auResult[0]['name'];?>
@@ -114,15 +116,15 @@
                     <?php
                   }
                 }
-              ?>
+              ?> -->
               <!-- /.card-footer -->
-              <div class="card-footer">
+              <!-- <div class="card-footer">
                 <form action="" method="post">
                   <div class="img-push">
                     <input type="text" name="comment" class="form-control form-control-sm" placeholder="Press enter to post comment">
                   </div>
                 </form>
-              </div>
+              </div> -->
               <!-- /.card-footer -->
             </div>
             <!-- /.card -->

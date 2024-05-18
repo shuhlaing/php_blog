@@ -6,14 +6,11 @@
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $role = $_POST['role'];
     if(empty($_POST['role'])){
-      $role = 0;
+      $role=0;
     }else{
       $role = 1;
     }
-
-
     $stat = $pdo->prepare("SELECT * FROM users WHERE email=:email");
 
     $stat->bindValue(':email',$email);
@@ -24,9 +21,9 @@
     if($user) {
       echo "<script>alert('Email duplicated.')</script>";
     }else{
-      $stmt=$pdo->prepare("INSERT INTO users(name,email,password) VALUES (:name,:email,:password)");
+      $stmt=$pdo->prepare("INSERT INTO users(name,email,password,role) VALUES (:name,:email,:password,:role)");
       $result= $stmt->execute(
-        array(':name'=>$name,':email'=>$email,':password'=>$password)
+        array(':name'=>$name,':email'=>$email,':password'=>$password,':role'=>$role)
       );
       if($result){
         echo "<script>alert('Successfully registered.You can now login');window.location.href='login.php';</script>";

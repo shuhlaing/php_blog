@@ -58,7 +58,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                   <div style="padding-bottom:10px;">
-                    <a href="userAdd.php" type="button" class="btn btn-success">Create New User</a>
+                    <a href="user_add.php" type="button" class="btn btn-success">Create New User</a>
                   </div>
                 <table class="table table-bordered">
                   <thead>
@@ -86,11 +86,11 @@
                             <td>
                             <div class="btn-group">
                               <div class="container">
-                                <a href="userEdit.php?id=<?php echo $value['id'] ?>" type="button" class="btn btn-primary">Edit</a>
+                                <a href="user_edit.php?id=<?php echo $value['id'] ?>" type="button" class="btn btn-primary">Edit</a>
                               </div>
 
                                 <div class="container">
-                                  <a href="userDelete.php?id=<?php echo $value['id']?>"
+                                  <a href="user_delete.php?id=<?php echo $value['id']?>"
                                     onClick="return confirm('Are you sure you want ot delete theis item')"
                                     type="button" class="btn btn-danger">Delete</a>
                                 </div>
