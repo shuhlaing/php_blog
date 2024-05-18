@@ -6,6 +6,12 @@
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $role = $_POST['role'];
+    if(empty($_POST['role'])){
+      $role = 0;
+    }else{
+      $role = 1;
+    }
 
 
     $stat = $pdo->prepare("SELECT * FROM users WHERE email=:email");

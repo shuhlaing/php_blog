@@ -19,6 +19,7 @@
   //
   $authorId = $cmResult[0]['author_id'];
   $stmtau = $pdo->prepare("SELECT * FROM users WHERE id=$authorId");
+  //$stmtau->bindValue(':id',$authorId);
   $stmtau->execute();
   $auResult = $stmtau->fetchAll();
 
