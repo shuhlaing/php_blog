@@ -24,8 +24,10 @@
         array('title'=>$title,':content'=>$content,':author_id'=>$_SESSION['user_id'],':image'=>$image)
       );
       if($result){
-        echo "<script>alert('Successfully added.')</script>";
-        header('Location: index.php');
+        //echo "<script>alert('Successfully added.');window.location.href="index.php";</script>";
+        //echo "<script>alert('Successfully updated.')</script>";
+        //header('Location: index.php');
+        echo "<script>alert('Successfully added.');window.location.href='index.php';</script>";
       }
   }
 
