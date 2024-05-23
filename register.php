@@ -3,6 +3,20 @@
   require 'config/config.php';
 
   if($_POST) {
+    if(empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || strlen($_POST['password']) < 4) {
+      if(empty($_POST['name'])) {
+        $nameError = 'Name cannot be null';
+      }
+      if(empty($_POST['email'])) {
+        $emailError = 'Email cannot be null';
+      }
+    if(empty($_POST['password'])) {
+      $passwordError = 'Password cannot be null';
+    }
+    if(strlen($_POST['password']) < 4){
+      $passwordError = "Password should be 4 characters at least";
+    }
+  }else{
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -23,13 +37,14 @@
     }else{
       $stmt=$pdo->prepare("INSERT INTO users(name,email,password,role) VALUES (:name,:email,:password,:role)");
       $result= $stmt->execute(
-        array(':name'=>$name,':email'=>$email,':password'=>$password,':role'=>$role)
+        array(':name'=>$name,':email'=>$email,':password'=>$password,':role'=>0)
       );
       if($result){
         echo "<script>alert('Successfully registered.You can now login');window.location.href='login.php';</script>";
       }
     }
   }
+}
  ?>
 
  <!DOCTYPE html>
@@ -37,7 +52,7 @@
  <head>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>Blog | Log in</title>
+   <title>Blog | Register</title>
 
    <!-- Google Font: Source Sans Pro -->
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -59,14 +74,16 @@
        <p class="login-box-msg">Register New Account</p>
 
        <form action="register.php" method="post">
+         <p style="color:red;"><?php echo empty($nameError) ? '' : '*'. $nameError; ?></p>
          <div class="input-group mb-3">
            <input type="text" name="name" class="form-control" placeholder="Name">
            <div class="input-group-append">
              <div class="input-group-text">
-               <span class="fas fa-envelope"></span>
+               <span class="fas fa-user"></span>
              </div>
            </div>
          </div>
+         <p style="color:red;"><?php echo empty($emailError) ? '' : '*'. $emailError; ?></p>
          <div class="input-group mb-3">
            <input type="email" name="email" class="form-control" placeholder="Email">
            <div class="input-group-append">
@@ -75,6 +92,7 @@
              </div>
            </div>
          </div>
+         <p style="color:red;"><?php echo empty($passwordError) ? '' : '*'. $passwordError; ?></p>
          <div class="input-group mb-3">
            <input type="password" name="password" class="form-control" placeholder="Password">
            <div class="input-group-append">

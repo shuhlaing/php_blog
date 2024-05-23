@@ -6,8 +6,7 @@
   if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
     header('Location: login.php');
   }
-  // echo $_SESSION['user_id'];
-  // exit();
+
   $stmt = $pdo->prepare("SELECT * FROM posts WHERE id=".$_GET['id']);
   $stmt->execute();
   $result = $stmt->fetchAll();
@@ -17,28 +16,39 @@
   $stmtcmt->execute();
   $cmResult = $stmtcmt->fetchAll();
 
-  //
-  //$authorId = $cmResult[0]['author_id'];
-  // $stmtau = $pdo->prepare("SELECT * FROM users WHERE id=".$_GET['author_id']);
-  // //$stmtau->bindValue(':id',$authorId);
-  // $stmtau->execute();
-  // $auResult = $stmtau->fetchAll();
+  $auResult = [];
+  if($cmResult){
+    foreach ($cmResult as $key => $value) {
+      $authorId = $cmResult[$key]['author_id'];
+      $stmtau = $pdo->prepare("SELECT * FROM users WHERE id=$authorId");
+      $stmtau->execute();
+      $auResult[] = $stmtau->fetchAll();
+    }
+
+  }
+  // print_r($auResult);
 
 
   if($_POST) {
-    $comment = $_POST['comment'];
-    $stmt=$pdo->prepare("INSERT INTO comments(content,author_id,post_id) VALUES (:content,:author_id,:post_id)");
-    $result= $stmt->execute(
-      array(':content'=>$comment,':author_id'=>$_SESSION['user_id'],':post_id'=>$blogId)
-      );
-    if($result){
-      header('Location: blogdetail.php?id='.$blogId);
+    if(empty($_POST['comment'])){
+      if(empty($_POST['title'])) {
+        $cmtError = 'Comment cannot be null';
       }
+    }else{
+      $comment = $_POST['comment'];
+      $stmt=$pdo->prepare("INSERT INTO comments(content,author_id,post_id) VALUES (:content,:author_id,:post_id)");
+      $result= $stmt->execute(
+        array(':content'=>$comment,':author_id'=>$_SESSION['user_id'],':post_id'=>$blogId)
+        );
+      if($result){
+        header('Location: blogdetail.php?id='.$blogId);
+        }
     }
-
-
+}
 
  ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,49 +93,52 @@
                 <a href="/blog" type="button" class="btn btn-default">Go Home</a>
               </div>
 
-
               <!-- <div class="card-footer card-comments">
                 <div class="card-comment">
+                  <?php if($cmResult) {?>
                   <div class="comment-text" style="margin-left:0px !important;">
+                    <?php foreach ($cmResult as $key => $value) { ?>
                     <span class="username">
-                      <?php echo $cmResult[0]['name'];?>
-                      <span class="text-muted float-right"><?php echo $cmResult[0]['created_at'];?></span>
+                      <?php print_r($auResult[$key][0]['name']);?>
+                      <span class="text-muted float-right"><?php echo $value['created_at'];?></span>
                     </span>
-                    <?php echo $cmResult[0]['content'];?>
+                    <?php echo $value['content'];?>
+                    <?php
+                  }
+                  ?>
                   </div>
+                  <?php }?>
                 </div>
               </div> -->
 
-
-              <!-- <?php
-                if($cmResult){
-                  foreach ($cmResult as $value){
-                    ?>
-                    <div class="card-footer card-comments">
-                      <div class="card-comment">
-                      <strong><?php echo $auResult[0]['name'];?></strong>
-                        <div class="comment-text" style="margin-left:0px !important;">
-                          <span class="username">
-                              <?php echo $auResult[0]['name'];?>
-                            <span class="text-muted float-right"><?php echo $value['created_at'];?></span>
-                          </span>
-                          <?php echo $value['content'];?>
-                        </div>
-                      </div>
-                    </div>
+              <div class="card-footer card-comments">
+                <div class="card-comment">
+                  <?php if($cmResult) {?>
+                  <div class="comment-text" style="margin-left:0px !important;">
+                    <?php foreach ($cmResult as $key => $value) { ?>
+                    <span class="username">
+                      <?php print_r($auResult[$key][0]['name']);?>
+                      <span class="text-muted float-right"><?php echo $value['created_at'];?></span>
+                    </span>
+                    <?php echo $value['content'];?>
                     <?php
                   }
-                }
-              ?> -->
-              <!-- /.card-footer -->
-              <!-- <div class="card-footer">
+                  ?>
+                  </div>
+                  <?php }?>
+                </div>
+              </div>
+
+
+              <div class="card-footer">
                 <form action="" method="post">
                   <div class="img-push">
+                    <p style="color:red;"><?php echo empty($cmtError) ? '' : '*'. $cmtError; ?></p>
                     <input type="text" name="comment" class="form-control form-control-sm" placeholder="Press enter to post comment">
                   </div>
                 </form>
-              </div> -->
-              <!-- /.card-footer -->
+              </div>
+
             </div>
             <!-- /.card -->
           </div>
