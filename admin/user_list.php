@@ -79,7 +79,7 @@
                       <th style="width: 10px">#</th>
                       <th style="width: 10px">Name</th>
                       <th style="width: 10px">Email</th>
-                      <th style="width: 10px">Password</th>
+                      <!-- <th style="width: 10px">Password</th> -->
                       <th style="width: 10px">Role</th>
                       <th style="width: 40px">Actions</th>
                     </tr>
@@ -94,7 +94,7 @@
                             <td><?php echo $i; ?></td>
                             <td><?php echo $value['name'] ?></td>
                             <td><?php echo $value['email'] ?></td>
-                              <td><?php echo $value['password'] ?></td>
+                              <!-- <td><?php echo $value['password'] ?></td> -->
                             <td><?php echo $value['role'] ?></td>
                             <td>
                             <div class="btn-group">

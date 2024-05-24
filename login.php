@@ -14,7 +14,7 @@
 
     //print_r($user);
     if($user){
-      if($user['password'] == $password){
+        if(password_verify($password, $user['password'])){
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['name'];
         $_SESSION['role'] = 0;
@@ -27,7 +27,7 @@
   }
  ?>
 
- 
+
 
  <!DOCTYPE html>
  <html lang="en">
