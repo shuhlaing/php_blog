@@ -1,6 +1,7 @@
 <?php
   session_start();
   require '../config/config.php';
+    require '../config/common.php';
 
   if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
     header('Location: login.php');
@@ -76,14 +77,15 @@ if ($_POST) {
             <div class="card">
               <div class="card-body">
                 <form class="" action="" method="post" enctype="multipart/form-data">
+                    <input name="_token" type="hidden" value="<?php echo ($_SESSION['_token']); ?>">
                   <div class="form-group">
                     <input type="hidden" name="id" value="<?php echo $result[0]['id'] ?>">
                     <label for="">Title</label><p style="color:red"><?php echo empty($titleError) ? '' : '*'. $titleError; ?></p>
-                    <input type="text" name="title" class="form-control" value="<?php echo $result[0]['title'] ?>">
+                    <input type="text" name="title" class="form-control" value="<?php echo escape($result[0]['title']) ?>">
                   </div>
                   <div class="form-group">
                     <label for="">Content</label><p style="color:red"><?php echo empty($contentError) ? '' : '*'. $contentError; ?></p>
-                    <textarea name="content" class="form-control" rows="8" cols="80"><?php echo $result[0]['content'] ?></textarea>
+                    <textarea name="content" class="form-control" rows="8" cols="80"><?php echo escape($result[0]['content']) ?></textarea>
                   </div>
                   <div class="form-group">
                     <label for="">Image</label><p style="color:red"><?php echo empty($imageError) ? '' : '*'. $imageError; ?></p>

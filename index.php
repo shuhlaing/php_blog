@@ -1,6 +1,7 @@
 <?php
   session_start();
   require 'config/config.php';
+  require 'config/common.php';
 
   if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
     header('Location: login.php');
@@ -89,11 +90,11 @@
                   <div class="card card-widget">
                     <div class="card-header">
                       <div class="card_title" style="text-align:center;">
-                        <h4><?php echo $value['title'] ?></h4>
+                        <h4><?php echo escape($value['title']) ?></h4>
                       </div>
                     </div>
                     <div class="card-body">
-                      <a href="blogdetail.php?id=<?php echo $value['id']; ?>">  <img class="img-fluid pad" src="admin/images/<?php echo $value['image']?>" style="height:200px !important;width:400px;" alt=""></a>
+                      <a href="blogdetail.php?id=<?php echo escape($value['title']); ?>">  <img class="img-fluid pad" src="admin/images/<?php echo $value['image']?>" style="height:200px !important;width:400px;" alt=""></a>
                     </div>
                   </div>
                 </div>

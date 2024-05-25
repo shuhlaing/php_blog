@@ -1,8 +1,8 @@
 <?php
-
-  require 'config/config.php';
-  error_reporting (E_ALL ^ E_NOTICE);
   session_start();
+  require 'config/config.php';
+  require 'config/common.php';
+
   if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
     header('Location: login.php');
   }
@@ -81,35 +81,17 @@
             <div class="card card-widget">
               <div class="card-header">
                 <div class="card_title" style="text-align:center;">
-                <h4><?php echo $result[0]['title'] ?></h4>
+                <h4><?php echo escape($result[0]['title']) ?></h4>
               </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <img class="img-fluid" src="admin/images/<?php echo $result[0]['image']?>" style="height:400px !important;width:100%;" alt="">
                 <br><br>
-                <p><?php echo $result[0]['content'] ?></p>
+                <p><?php echo escape($result[0]['content']) ?></p>
                 <!-- <h3>Comment</h3><hr> -->
                 <a href="/blog" type="button" class="btn btn-default">Go Home</a>
               </div>
-
-              <!-- <div class="card-footer card-comments">
-                <div class="card-comment">
-                  <?php if($cmResult) {?>
-                  <div class="comment-text" style="margin-left:0px !important;">
-                    <?php foreach ($cmResult as $key => $value) { ?>
-                    <span class="username">
-                      <?php print_r($auResult[$key][0]['name']);?>
-                      <span class="text-muted float-right"><?php echo $value['created_at'];?></span>
-                    </span>
-                    <?php echo $value['content'];?>
-                    <?php
-                  }
-                  ?>
-                  </div>
-                  <?php }?>
-                </div>
-              </div> -->
 
               <div class="card-footer card-comments">
                 <div class="card-comment">
@@ -117,10 +99,10 @@
                   <div class="comment-text" style="margin-left:0px !important;">
                     <?php foreach ($cmResult as $key => $value) { ?>
                     <span class="username">
-                      <?php print_r($auResult[$key][0]['name']);?>
-                      <span class="text-muted float-right"><?php echo $value['created_at'];?></span>
+                      <?php echo escape($auResult[$key][0]['name']);?>
+                      <span class="text-muted float-right"><?php echo escape($value['created_at']);?></span>
                     </span>
-                    <?php echo $value['content'];?>
+                    <?php echo escape($value['content']);?>
                     <?php
                   }
                   ?>
@@ -132,6 +114,7 @@
 
               <div class="card-footer">
                 <form action="" method="post">
+                  <input name="_token" type="hidden" value="<?php echo ($_SESSION['_token']); ?>">
                   <div class="img-push">
                     <p style="color:red;"><?php echo empty($cmtError) ? '' : '*'. $cmtError; ?></p>
                     <input type="text" name="comment" class="form-control form-control-sm" placeholder="Press enter to post comment">

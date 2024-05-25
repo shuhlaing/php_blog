@@ -1,6 +1,7 @@
 <?php
-  session_start();
+
   require '../config/config.php';
+  require '../config/common.php';
 
   if(empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
     header('Location: login.php');
@@ -11,6 +12,7 @@
 
 
   if ($_POST){
+
     if(empty($_POST['title']) || empty($_POST['content']) || empty($_FILES['image'])) {
       if(empty($_POST['title'])) {
         $titleError = 'Title cannot be null';
@@ -36,6 +38,9 @@
         $result= $stmt->execute(
           array('title'=>$title,':content'=>$content,':author_id'=>$_SESSION['user_id'],':image'=>$image)
         );
+
+        echo $result;
+        exit();
         if($result){
           //echo "<script>alert('Successfully added.');window.location.href="index.php";</script>";
           //echo "<script>alert('Successfully updated.')</script>";
@@ -58,6 +63,7 @@
             <div class="card">
               <div class="card-body">
                 <form class="" action="add.php" method="post" enctype="multipart/form-data">
+                  <input name="_token" type="hidden" value="<?php echo ($_SESSION['_token']); ?>">
                   <div class="form-group">
                     <!-- <label for="">Title</label><?php echo $nameError ? $nameError : '' ?> -->
                     <label for="">Title</label><p style="color:red"><?php echo empty($titleError) ? '' : '*'. $titleError; ?></p>
