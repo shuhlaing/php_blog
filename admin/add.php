@@ -1,5 +1,5 @@
 <?php
-
+  session_start();
   require '../config/config.php';
   require '../config/common.php';
 
@@ -39,8 +39,6 @@
           array('title'=>$title,':content'=>$content,':author_id'=>$_SESSION['user_id'],':image'=>$image)
         );
 
-        echo $result;
-        exit();
         if($result){
           //echo "<script>alert('Successfully added.');window.location.href="index.php";</script>";
           //echo "<script>alert('Successfully updated.')</script>";

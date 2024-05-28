@@ -94,7 +94,7 @@
                       </div>
                     </div>
                     <div class="card-body">
-                      <a href="blogdetail.php?id=<?php echo escape($value['title']); ?>">  <img class="img-fluid pad" src="admin/images/<?php echo $value['image']?>" style="height:200px !important;width:400px;" alt=""></a>
+                      <a href="blogdetail.php?id=<?php echo escape($value['id']); ?>">  <img class="img-fluid pad" src="admin/images/<?php echo $value['image']?>" style="height:200px !important;width:400px;" alt=""></a>
                     </div>
                   </div>
                 </div>

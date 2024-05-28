@@ -56,8 +56,6 @@
                   $stmt = $pdo->prepare("SELECT * FROM posts WHERE title LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offset,$numOfrecs");
                   $stmt->execute();
                   $result = $stmt->fetchAll();
-                  echo $result;
-                  exit();
                 }
 
 
@@ -66,7 +64,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                   <div style="padding-bottom:10px;">
-                    <a href="add.php" type="button" class="btn btn-success">Create New Blog Post</a>
+                    <a href="add.php" type="button" class="btn btn-success">New Blog Post</a>
                   </div>
                 <table class="table table-bordered">
                   <thead>
